@@ -1,0 +1,43 @@
+/*
+ * 此样式表用于全局初始化
+ */
+
+@import url('https://fonts.googleapis.cn/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+// 变量设置
+// 注： -e 代表变量对全局生效
+//     -h → horizontal, -v → vertical
+:root {
+    --e-content-h-padding: 20%;
+    --e-content-h-max-width: 1400px;
+    --e-color-theme: var(--p-emerald-500);
+}
+// 针对移动端设备的变量
+@media screen and (max-width: 800px) {
+    :root {
+        --e-content-h-padding: 5%;
+    }
+}
+
+// 基础布局样式
+#app {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter', '微软雅黑';
+    main {
+        flex: 1;
+        padding: 0 var(--e-content-h-padding);
+        max-width: var(--e-content-h-max-width);
+    }
+}
+
+// 消除初始样式
+a {
+    text-decoration: none;
+    color: inherit;
+}
+a:hover {
+    color: var(--e-color-theme);
+}

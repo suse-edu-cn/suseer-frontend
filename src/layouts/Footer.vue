@@ -1,0 +1,18 @@
+<template>
+    <footer>
+        <p>&copy; 2025 Project Explosion</p>
+    </footer>
+</template>
+
+<style>
+footer {
+    text-align: center;
+    font-size: .9rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid #ddd;
+
+    p {
+        margin: 0;
+    }
+}
+</style>
