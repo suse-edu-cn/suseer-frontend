@@ -8,6 +8,7 @@
 // 注： -e 代表变量对全局生效
 //     -h → horizontal, -v → vertical
 :root {
+    --e-display: flex;
     --e-content-h-padding: 20%;
     --e-content-h-max-width: 1400px;
     --e-color-theme: var(--p-emerald-500);
@@ -15,6 +16,7 @@
 // 针对移动端设备的变量
 @media screen and (max-width: 800px) {
     :root {
+        --e-display: none;
         --e-content-h-padding: 5%;
     }
 }
@@ -28,8 +30,8 @@
     font-family: 'Inter', '微软雅黑';
     main {
         flex: 1;
+        width: 100%;
         padding: 0 var(--e-content-h-padding);
-        max-width: var(--e-content-h-max-width);
     }
 }
 

@@ -3,7 +3,7 @@ import HomeView from '@/views/HomeView.vue'
 
 const routes = [
     { path: '/', component: HomeView },
-    { path: '/login', component: () => import('@/views/LoginView.vue') },
+    { path: '/portal', component: () => import('@/views/PortalView.vue') },
 ]
 
 export default createRouter({
