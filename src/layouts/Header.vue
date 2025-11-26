@@ -5,12 +5,12 @@ import { RouterLink } from 'vue-router'
 <template>
     <header>
         <div class="left">
-            <RouterLink to="/">SUSEer Frontend</RouterLink>
+            <RouterLink to="/">OAAHub Frontend</RouterLink>
         </div>
         <div class="grow"></div>
         <div class="right">
             <RouterLink to="/competitions">比赛中心</RouterLink>
-            <RouterLink to="/login">登录</RouterLink>
+            <RouterLink to="/portal">登录</RouterLink>
         </div>
     </header>
 </template>
