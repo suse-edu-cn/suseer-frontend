@@ -29,6 +29,8 @@
     "dependencies": {
         "@primeuix/themes": "^1.2.5",
         "@primevue/forms": "^4.4.1",
+        "axios": "^1.13.2",
+        "js-cookie": "^3.0.5",
         "less": "^4.4.2",
         "normalize.css": "^8.0.1",
         "pinia": "^3.0.4",
