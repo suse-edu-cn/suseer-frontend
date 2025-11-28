@@ -5,7 +5,7 @@ import { z } from 'zod'
 import axios from 'axios'
 import cookies from 'js-cookie'
 
-import { Button, Checkbox, FloatLabel, InputText, Message, Toast } from 'primevue'
+import { Button, Checkbox, FloatLabel, InputText, Message } from 'primevue'
 import { Form } from '@primevue/forms'
 import { useToast } from 'primevue/usetoast'
 import { zodResolver } from '@primevue/forms/resolvers/zod'
@@ -94,8 +94,6 @@ async function onRegister() {
 
 <template>
     <main>
-        <Toast position="top-center" />
-
         <div class="left">
             <img v-once :src="imgSet[Math.floor(Math.random() * imgSet.length)]" alt="" srcset="">
         </div>
