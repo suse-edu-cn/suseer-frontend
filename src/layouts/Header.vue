@@ -9,8 +9,8 @@ import { RouterLink } from 'vue-router'
         </div>
         <div class="grow"></div>
         <div class="right">
-            <RouterLink to="/competitions">比赛中心</RouterLink>
-            <RouterLink to="/portal">登录</RouterLink>
+            <RouterLink to="/match">比赛中心</RouterLink>
+            <RouterLink to="/auth">登录</RouterLink>
         </div>
     </header>
 </template>

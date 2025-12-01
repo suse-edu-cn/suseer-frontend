@@ -5,11 +5,16 @@ const routes = [
     { path: '/', component: HomeView },
 
     // 个人页面相关
-    { path: '/portal', component: () => import('@/views/PortalView.vue') },
-    { path: '/user', component: () => import('@/views/UserView.vue') },
+    { path: '/auth', component: () => import('@/views/AuthView.vue') },
+    {
+        path: '/user',
+        component: () => import('@/views/UserView.vue'),
+        meta: { requiresAuth: true },
+    },
 
     // 比赛相关
     { path: '/match', component: () => import('@/views/MatchListView.vue') },
+    { path: '/match/:id', component: () => import('@/views/MatchDetailView.vue') },
 ]
 
 export default createRouter({

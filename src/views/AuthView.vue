@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { z } from 'zod'
 import axios from 'axios'
@@ -7,12 +7,14 @@ import cookies from 'js-cookie'
 
 import { Button, Checkbox, FloatLabel, InputText, Message } from 'primevue'
 import { Form } from '@primevue/forms'
-import { useToast } from 'primevue/usetoast'
 import { zodResolver } from '@primevue/forms/resolvers/zod'
 
+import { useAuthStore } from '@/stores/auth'
+import setToast from '@/utils/setToast'
+
 const apiUrl = import.meta.env.VITE_API_URL
-const toast = useToast()
 const router = useRouter()
+const authStore = useAuthStore()
 const imgSet = [
     'https://img.alicdn.com/O1CN01IBboqk1ILG3pdXfvg_!!2212930340876-0-ampmedia.jpg',
     'https://img.alicdn.com/O1CN01zvyC7r1ILG3pymwEb_!!2212930340876-2-ampmedia.png',
@@ -41,11 +43,6 @@ const resolver = ref(zodResolver(
 // portal 模式，0 为登录，1 为注册
 const mode = ref(0)
 
-// 登录或注册出错，显示 Toast
-const showToast = (severity, summary, detail) => {
-    toast.add({ severity, summary, detail, life: 4500 })
-}
-
 // 提交登录请求
 const loginData = ref({
     username: '',
@@ -58,12 +55,14 @@ async function onLogin() {
         const body = resp?.data
         if (body.code == 200) {
             cookies.set('token', body.data.token, { expires: 31, secure: true, sameSite: 'Lax', path: '/' })
+            authStore.isAuthed = true
+            authStore.token = body.data.token
             router.push('/user')
         } else {
-            showToast('error', '登录失败', body.message)
+            setToast('error', '登录失败', body.message)
         }
     } catch (err) {
-        showToast('error', '登录失败', err.response?.data?.message || '未知错误，请联系负责后端的同学')
+        setToast('error', '登录失败', err.response?.data?.message || '未知错误，请联系负责后端的同学')
     }
 }
 
@@ -81,15 +80,35 @@ async function onRegister() {
         const resp = await axios.post(url, registerData.value)
         const body = resp?.data
         if (body.code == 200) {
-            showToast('success', '注册成功', '使用你的通行证登录吧！')
+            setToast('success', '注册成功', '使用你的通行证登录吧！')
             mode.value = 0
         } else {
-            showToast('error', '注册失败', body.message)
+            setToast('error', '注册失败', body.message)
         }
     } catch (err) {
-        showToast('error', '注册失败', err.response?.data?.message || '未知错误，请联系负责后端的同学')
+        setToast('error', '注册失败', err.response?.data?.message || '未知错误，请联系负责后端的同学')
     }
 }
+
+// 如果用户已经存在登录状态，就直接跳到 /user
+onMounted(() => {
+    const token = cookies.get('token')
+    if (token) {
+        axios.get(apiUrl + '/user/Info', {
+            headers: {
+                Authorization: token
+            }
+        }).then(res => {
+            if (res.data.code == 200) {
+                setToast('success', '用户已登录', '欢迎回来，正在跳转至主页')
+                authStore.isAuthed = true
+                authStore.token = token
+                authStore.userInfo = res.data.data
+                router.push('/user')
+            }
+        })
+    }
+})
 </script>
 
 <template>
