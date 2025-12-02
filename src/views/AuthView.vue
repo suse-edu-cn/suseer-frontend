@@ -9,10 +9,10 @@ import { Form } from '@primevue/forms'
 import { zodResolver } from '@primevue/forms/resolvers/zod'
 
 import { useAuthStore } from '@/stores/auth'
+import { initAuthStore } from '@/utils/initAuthStore'
 import setToast from '@/utils/setToast'
 import request from '@/utils/request'
 
-const apiUrl = import.meta.env.VITE_API_URL
 const router = useRouter()
 const authStore = useAuthStore()
 const imgSet = [
@@ -94,17 +94,13 @@ async function onRegister() {
     }
 }
 
-// 如果用户已经存在登录状态，就直接跳到 /user
-onMounted(async () => {
-    const resp = await request({
-        url: '/user/Info',
-        method: 'GET'
-    })
-    if (resp.code == 200) {
+onMounted(() => {
+    // 如果因刷新等原因导致 authStore 未初始化，则先 init
+    if (!authStore.isAuthed) {
+        initAuthStore()
+    }
+    if (authStore.isAuthed) {
         setToast('success', '用户已登录', '欢迎回来，正在跳转至主页')
-        authStore.isAuthed = true
-        authStore.token = cookies.get('token') || ''
-        authStore.userInfo = resp.data
         router.push('/user')
     }
 })
