@@ -83,9 +83,12 @@ const registerData = ref({
     username: '',
     name: '',
     password: '',
-    role: '会员'
+    role: '会员',
+    isAccepted: false
 })
 async function onRegister() {
+    console.log(123);
+
     if (!registerSchema.safeParse(registerData.value).success) {
         return
     }
@@ -95,6 +98,8 @@ async function onRegister() {
             method: 'POST',
             data: registerData.value
         })
+        console.log(resp);
+
         if (resp.code == 200) {
             setToast('success', '注册成功', '使用你的通行证登录吧！')
             mode.value = 0
@@ -106,15 +111,17 @@ async function onRegister() {
     }
 }
 
-onMounted(() => {
+onMounted(async () => {
     // 如果因刷新等原因导致 authStore 未初始化，则先 init
     if (!authStore.isReady) {
-        initAuthStore()
+        await initAuthStore()
     }
+
     if (authStore.isAuthed) {
         setToast('success', '用户已登录', '欢迎回来，正在跳转至主页')
         router.push('/user')
     }
+
 })
 </script>
 
@@ -222,7 +229,7 @@ onMounted(() => {
                 </Message>
             </div>
             <div class="input-box">
-                <Checkbox input-id="isAccepted" name="isAccepted" binary />
+                <Checkbox v-model="registerData.isAccepted" input-id="isAccepted" name="isAccepted" binary />
                 <label for="isAccepted">&nbsp;&nbsp;我已阅读并同意<a href="#" target="_blank">《用户协议》</a></label>
             </div>
             <br /><br />

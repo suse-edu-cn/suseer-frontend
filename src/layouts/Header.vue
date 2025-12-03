@@ -1,16 +1,31 @@
 <script setup>
+import { onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
+
+import { useAuthStore } from '@/stores/auth'
+import { initAuthStore } from '@/utils/initAuthStore'
+const authStore = useAuthStore()
+
+onMounted(async () => {
+    if (!authStore.isReady) {
+        await initAuthStore()
+    }
+})
 </script>
 
 <template>
     <header>
         <div class="left">
-            <RouterLink to="/">OAAHub Frontend</RouterLink>
+            <router-link to="/">OAAHub Frontend</router-link>
         </div>
         <div class="grow"></div>
         <div class="right">
-            <RouterLink to="/match">比赛中心</RouterLink>
-            <RouterLink to="/auth">登录</RouterLink>
+            <router-link to="/match">比赛中心</router-link>
+            <router-link to="/user" v-if="authStore.isAuthed">
+                <img :src="authStore.userInfo.avatar" alt="用户头像" />&nbsp;
+                {{ authStore.userInfo.username }}
+            </router-link>
+            <router-link to="/auth" v-if="!authStore.isAuthed">登录</router-link>
         </div>
     </header>
 </template>
@@ -19,9 +34,9 @@ import { RouterLink } from 'vue-router'
 header {
     display: flex;
     border-bottom: 1px solid #ddd;
-    line-height: 1;
+    line-height: 3.75rem;
     font-size: 1rem;
-    padding: 1.25rem var(--e-content-h-padding);
+    padding: 0 var(--e-content-h-padding);
 
     .left {
         font-weight: 600;
@@ -33,9 +48,19 @@ header {
 
     .right {
         font-size: .9rem;
+        display: flex;
+        align-items: center;
+        gap: 2rem;
 
         a {
-            margin-left: 2em;
+            display: flex;
+            align-items: center;
+        }
+
+        img {
+            width: 2.25em;
+            height: 2.25em;
+            border-radius: 50%;
         }
     }
 }
