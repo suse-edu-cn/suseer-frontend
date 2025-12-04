@@ -2,7 +2,8 @@
  * 此样式表用于全局初始化
  */
 
-@import url('https://fonts.googleapis.cn/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('./fonts.less');
+@import url('./markdown.less');
 
 // 变量设置
 // 注： -e 代表变量对全局生效
@@ -12,6 +13,8 @@
     --e-content-h-padding: 20%;
     --e-content-h-max-width: 1400px;
     --e-color-theme: var(--p-emerald-500);
+    --e-border-radius: 8px;
+    --e-banner-padding: 3.5rem var(--e-content-h-padding) 2.5rem;
 }
 // 针对移动端设备的变量
 @media screen and (max-width: 800px) {
@@ -25,14 +28,23 @@
 #app {
     width: 100vw;
     height: 100vh;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     font-family: 'Inter', '微软雅黑';
     main {
         flex: 1;
         width: 100%;
+        max-width: 100%;
         padding: 0 var(--e-content-h-padding);
     }
+}
+
+// 基础元素样式
+.e-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 2rem 0;
 }
 
 // 消除初始样式
