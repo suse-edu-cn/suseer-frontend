@@ -25,7 +25,7 @@ const imgSet = [
 
 // 登录表单验证
 const initialValues = ref({
-    studentid: '',
+    student_id: '',
     name: '',
     username: '',
     password: '',
@@ -37,7 +37,7 @@ const loginSchema = z.object({
     password: z.string().min(1, { message: '请填写密码' })
 })
 const registerSchema = z.object({
-    studentid: z.string().min(1, { message: '请填写学号' }).regex(/^\d+$/, { message: '学号必须为数字' }),
+    student_id: z.string().min(1, { message: '请填写学号' }).regex(/^\d+$/, { message: '学号必须为数字' }),
     name: z.string().min(1, { message: '请填写姓名' }),
     username: z.string().min(1, { message: '请填写用户名' }),
     password: z.string().min(1, { message: '请填写密码' }),
@@ -78,7 +78,7 @@ async function onLogin() {
 
 // 提交注册请求
 const registerData = ref({
-    studentid: '',
+    student_id: '',
     username: '',
     name: '',
     password: '',
@@ -95,8 +95,6 @@ async function onRegister() {
             method: 'POST',
             data: registerData.value
         })
-        console.log(resp);
-
         if (resp.code == 200) {
             setToast('success', '注册成功', '使用你的通行证登录吧！')
             mode.value = 0
@@ -117,6 +115,7 @@ onMounted(async () => {
     if (authStore.isAuthed) {
         setToast('success', '用户已登录', '欢迎回来，正在跳转至主页')
         router.push('/user')
+        initAuthStore()
     }
 
 })
@@ -177,12 +176,12 @@ onMounted(async () => {
                 <FloatLabel variant="on">
                     <IconField>
                         <InputIcon class="pi pi-id-card" />
-                        <InputText v-model="registerData.studentid" name="studentid" size="large" class="input-box" />
+                        <InputText v-model="registerData.student_id" name="student_id" size="large" class="input-box" />
                     </IconField>
                     <label for="on_label">学号</label>
                 </FloatLabel>
                 <Message severity="error" size="small" variant="simple">
-                    <span v-if="$form.studentid?.invalid">{{ $form.studentid.error?.message }}</span>&nbsp;
+                    <span v-if="$form.student_id?.invalid">{{ $form.student_id.error?.message }}</span>&nbsp;
                 </Message>
             </div>
 

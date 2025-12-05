@@ -35,7 +35,7 @@ onMounted(async () => {
                     <div>{{ authStore.userInfo.name }}&nbsp;·&nbsp;{{ authStore.userInfo.role }}&nbsp;·&nbsp;{{
                         authStore.userInfo.department }}</div>
                     <div>
-                        <span class="pi pi-users">&nbsp;{{ authStore.userInfo.studentid }}</span>
+                        <span class="pi pi-users">&nbsp;{{ authStore.userInfo.student_id }}</span>
                     </div>
                 </span>
                 <span class="grow"></span>
