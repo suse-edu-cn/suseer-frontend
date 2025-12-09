@@ -8,22 +8,15 @@ export default defineConfig({
     plugins: [vue(), vueDevTools()],
     server: {
         port: 3011,
-        proxy: {
-            '/api': {
-                target: 'http://api.dev.suseoaa.com:8080',
-                changeOrigin: true,
-                rewrite: (path) => path.replace(/^\/api/, ''),
-            },
-        },
     },
     build: {
         assetsInlineLimit: 6144,
         rollupOptions: {
             output: {
                 hashCharacters: 'hex',
-                assetFileNames: '_suseer/[name]-[hash].[ext]',
-                chunkFileNames: '_suseer/[name]-[hash].js',
-                entryFileNames: '_suseer/[name]-[hash].js',
+                assetFileNames: '_oaa/[name]-[hash].[ext]',
+                chunkFileNames: '_oaa/[name]-[hash].js',
+                entryFileNames: '_oaa/[name]-[hash].js',
                 minifyInternalExports: true,
             },
         },
